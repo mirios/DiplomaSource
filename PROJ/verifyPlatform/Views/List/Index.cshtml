@@ -1,0 +1,91 @@
+﻿@using verifyPlatform.ViewModels
+
+<div class="bacground-contact-page">
+    <div class="container-fluid containerfluid">
+      <div class="row rowform-create-list">
+          <div class="col">
+          <div class="form-floating">
+            <input type="text" class="listname" id="ListName" placeholder="ListName">
+          </div>
+      </div>
+      </div>
+      <div class="row rowform-create-list">
+      <div class="col">
+          <fieldset disabled class="dset">
+            <div class="mb-3">
+               <input type="text" id="LeadID" class="form-control" placeholder="LeadID">
+           </div>
+           <div class="mb-3">
+               <input type="text" id="Status" class="form-control" placeholder="Status">
+           </div>
+          </fieldset>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <textarea class="comment-create" placeholder="Leave a comment here for rulesTitle" id="rulesTitle"></textarea>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <textarea class="comment-create" placeholder="Leave a comment here for rulesGEO" id="rulesGEO"></textarea>
+          </div>
+      </div>
+      </div>
+
+      <div class="row rowform-create-list">
+      <div class="col">
+          <fieldset disabled class="dset">
+              <div class="mb-3">
+               <input type="text" id="Verdict" class="form-control" placeholder="Verdict">
+              </div>
+              <div class="mb-3">
+               <input type="text" id="UserName" class="form-control" placeholder="UserName">
+              </div>
+          </fieldset>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <textarea class="comment-create" placeholder="Leave a comment here for rulesES" id="rulesES"></textarea>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <textarea class="comment-create" placeholder="Leave a comment here for rulesRS" id="rulesRS"></textarea>
+          </div>
+      </div>
+      </div>
+      <div class="row rowform-create-list">
+          <div class="form-floating">
+            <textarea class="comment-create" placeholder="Leave a comment here for rulesIndustrie" id="rulesIndustrie"></textarea>
+          </div>
+      </div>
+      <div class="row rowform-create-list">
+        <a class="nav-link text-dark" asp-area="">
+            <button type="button" class="btn btn-outline-success btn-sm" id="create">Create</button>
+        </a>
+        <div id="result" style="display: none;"></div>
+      </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $('#create').click(function(e){
+                    var ListName = $('#ListName').val();
+                    var rulesTitle = $('#rulesTitle').val();
+                    var rulesGEO = $('#rulesGEO').val();
+                    var rulesES = $('#rulesES').val();
+                    var rulesRS = $('#rulesRS').val();
+                    var rulesIndustrie = $('#rulesIndustrie').val();
+                    e.preventDefault();
+                    name = encodeURIComponent(name);
+                    $('#result').load('@Url.Action("CreateList")', { 'choices[]': [ListName, rulesTitle, rulesGEO, rulesES, rulesRS, rulesIndustrie] });
+                    alert("List Was Created");
+                    window.location.href = 'https://localhost:7081/List/Dashboard';
+                });
+
+            });
+
+    </script>
+}

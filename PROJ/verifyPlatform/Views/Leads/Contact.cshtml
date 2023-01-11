@@ -1,0 +1,278 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "Contact";
+    Layout = null;
+    string pes = "@";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - verifyPlatform</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/verifyPlatform.styles.css" asp-append-version="true" />
+</head>
+<body>
+<div class="bacground-contact-page">
+    <div class="container-fluid containerfluid">
+        <div class="input-group input-group-sm mb-3">
+            <select name="user_profile_color_2" required="required" class="col-2 verdict" id="verdict">
+                <option value="">N/A</option>
+                <option value="Y1:Linkedin">Y1:Linkedin</option>
+                <option value="Y2:Summary">Y2:Summary</option>
+                <option value="Y3:Facebook">Y3:Facebook</option>
+                <option value="Y4:Suspicious Lin">Y4:Suspicious Linkedin</option>
+                <option value="Y5:3rd Party ProofLink">Y5:3rd Party ProofLink</option>
+                <option value="N/A:Title/PL Summary">N/A:Title/PL Summary</option>
+                <option value="N1:NWC">N1:NWC</option>
+                <option value="N2:Bad Data">N2:Bad Data</option>
+                <option value="N/A:Industry">N/A:Industry</option>
+                <option value="N/A:Emp.Size">N/A:Emp.Size</option>
+                <option value="N/A:Revenue">N/A:Revenue</option>
+                <option value="N/A:Duplicate">N/A:Duplicate</option>
+                <option value="N/A:NAC">N/A:NAC</option>
+                <option value="N/A:SUP">N/A:SUP</option>
+            </select>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                <button type="button" id="Add" class="btn btn-success process">Add New Contact</button>
+            }
+            @if (User.Identity.IsAuthenticated && User.IsInRole("user"))
+            {
+                <button type="button" class="btn btn-success process">Process</button>
+            }
+            <button type="button" class="btn btn btn-primary process" id="Release">Release</button>
+        </div>
+      <div class="row rowform">
+        <div class="col colleft">
+          <div class="row rowmarning">
+            <div class="col-4 rules">
+                <b>JOB LEVEL</b><br />
+                <br />
+                <b>JOB TITLE</b><br />
+                @Html.Raw(Model[0])
+            </div>
+            <div class="col-8 datacheck">
+                <p class="pborder"><b>Name / Email / Company</b></p>
+                <div class="input-group input-group-sm mb-3">
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">FL+CN</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">FL+Domain</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">Email</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">Domain</button></div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="First Name" id="FirstName">
+                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="inputGroup-sizing-sm" id="LastName">
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Email" id="Email" aria-label="Email" aria-describedby="inputGroup-sizing-sm">
+                    <span id="emailGen" class="input-group-text" style="cursor: pointer">
+                        &#9654;
+                    </span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" style="width: 130px;" placeholder="Company Name" id="CompanyName" aria-label="Company Name" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" placeholder="WebSite" id="WebSite" aria-label="WebSite" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" >
+                        &#128279;
+                    </span>
+                </div>
+                <p class="pborder"><b>Title / ProofLink</b></p>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Title" id="Title" aria-label="Title" aria-describedby="Title">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="ProofLink" id="ProofLink" aria-label="ProofLink" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" >
+                        &#128279;
+                    </span>
+                </div>
+            </div>
+          </div>
+
+          <div class="row rowmarning-2">
+            <div class="col-4 rules">
+                <b>GEO AND DESCRIPTION </b><br />
+                @Html.Raw(Model[1])
+            </div>
+            <div class="col-8 datacheck">
+                <p class="pborder"><b>Address</b></p>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Country" id="Country" aria-label="Country" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" >
+                        <div class='switcher'>
+	                        <label  class='switcher-label switcher-off' for='offGEO'>off</label>
+	                        <input id='offGEO' class='switcher-radio-off' type='radio' name='value1' value='off'>
+	
+	                        <label class='switcher-label switcher-neutral' for='neutralGEO'>neutral</label>
+	                        <input id='neutralGEO' class='switcher-radio-neutral' type='radio' name='value1' value='neutral' checked>
+	
+	                        <label class='switcher-label switcher-on' for='onGEO'>on</label>
+	                        <input id='onGEO' class='switcher-radio-on' type='radio' name='value1' value='on'>
+	                    <div class='switcher-slider'></div>
+                        </div>
+                    </span>
+                    <input type="text" class="form-control" placeholder="State" id="State" aria-label="State" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="City" id="City" aria-label="City" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" placeholder="Zip Code" id="ZipCode" aria-label="Zip Code" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Address" id="Address" aria-label="Address" aria-describedby="inputGroup-sizing-sm">
+                </div>
+            </div>
+          </div>
+          <div class="row">
+                <textarea class="comment" placeholder="Leave a comment here"></textarea>
+          </div>
+        </div>
+        <div class="col colright">
+           <div class="row">
+            <div class="col-8 datacheck">
+                <p class="pborder"><b>Employees / Revenue</b></p>
+                <div class="input-group input-group-sm mb-3">
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">D+YF</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">D+Linkedin</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">D+Zoomonfo</button></div>
+                    <div><button type="button" class="btn btn-outline-info btn-sm steroid">D+Wiki</button></div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Employees Size" id="ES" aria-label="Employees Size" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" placeholder="Employees Size PL" id="ESPL" aria-label="Employees Size PL" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text" >
+                        &#128279;
+                    </span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Revenue Size" id="RS" aria-label="Revenue Size" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" placeholder="Revenue Size PL" id="RSPL" aria-label="Revenue Size PL" aria-describedby="inputGroup-sizing-sm">
+                    <span class="input-group-text">
+                        &#128279;
+                    </span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                     <select name="user_profile_color_2" required="required" id="ind" class="form-control">
+                        <option value="NoIndustrie">NoIndustrie</option>
+                        <option value="Advertisement / Marketing">Advertisement / Marketing</option>
+                        <option value="Aerospace / Aviation">Aerospace / Aviation</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Biotech and Pharmaceuticals">Biotech and Pharmaceuticals</option>
+                        <option value="Computers and Technology">Computers and Technology</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Corporate Services / Business Services / B2B">Corporate Services / Business Services / B2B</option>
+                        <option value="Education">Education</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Government">Government</option>
+                        <option value="Healthcare / Medical">Healthcare / Medical</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Media">Media</option>
+                        <option value="Non-Profit / Organizations">Non-Profit / Organizations</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Retail and Consumer Goods">Retail and Consumer Goods</option>
+                        <option value="Service Industry / B2C">Service Industry / B2C</option>
+                        <option value="Telecommunication">Telecommunication</option>
+                        <option value="Transportation and Logistics">Transportation and Logistics</option>
+                        <option value="Travel / Hospitality / Entertainment">Travel / Hospitality / Entertainment</option>
+                        <option value="Utility / Energy">Utility / Energy</option>
+                        <option value="Research">Research</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Phone number" id="Phone" aria-label="Phone number" aria-describedby="inputGroup-sizing-sm">
+                </div>
+            </div>
+            <div class="col-4 rules">
+                <b>EMPLOYEES</b><br />
+                @Html.Raw(Model[2])
+                <br />
+                <b>REVENUE</b><br />
+                @Html.Raw(Model[3])
+                <br />
+                <b>INDUSTRIES</b><br />
+                @Html.Raw(Model[4])
+                <br/>
+            </div>
+            </div>
+            <div class="row">
+                <textarea class="comment" placeholder="Leave a comment here"></textarea>
+          </div>
+          <div id="res" style="display: none;">
+              
+          </div>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#emailGen').click(function(e){
+            var FirstName = $('#FirstName').val();
+            var LastName = $('#LastName').val();
+            var WebSite = $('#WebSite').val();
+            e.preventDefault();
+            var email = FirstName + LastName + "@pes" + WebSite;
+            document.getElementById('Email').value = email;
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#Release').click(function(e){
+            window.location.href = 'https://localhost:7081/List/Dashboard';
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#Add').click(function(e){
+            var FirstName = $('#FirstName').val();
+            var LastName = $('#LastName').val();
+            var Email = $('#Email').val();
+            var CompanyName = $('#CompanyName').val();
+            var Title = $('#Title').val();
+            var ProofLink = $('#ProofLink').val();
+            var Country = $('#Country').val();
+            var State = $('#State').val();
+            var City = $('#City').val();
+            var ZipCode = $('#ZipCode').val();
+            var Address = $('#Address').val();
+            var RSPL = $('#RSPL').val();
+            var RS = $('#RS').val();
+            var ESPL = $('#ESPL').val();
+            var ES = $('#ES').val();
+            var ind = $('#ind').val();
+            var Phone = $('#Phone').val();
+            var Verdict = $('#verdict').val();
+
+            e.preventDefault();
+            name = encodeURIComponent(name);
+            $('#res').load('@Url.Action("AddNewContact")', { 'choices[]': [FirstName, LastName, Email, Title, ProofLink,
+            Country, State, City, Address, ZipCode,
+            CompanyName, ES, ESPL,
+            RS, RSPL,
+            ind, Phone, Verdict] });
+            alert('Contact Was Created');
+            var FirstName = $('#FirstName').val('');
+            var LastName = $('#LastName').val('');
+            var Email = $('#Email').val('');
+            var Title = $('#Title').val('');
+            var ProofLink = $('#ProofLink').val('');
+            var Verdict = $('#verdict').val('');
+        });
+    });
+</script>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ListGroup>
+
+<!-- Modal window -->
+<div id="myModal" class="modal">
+
+  <!-- Modal context -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>By continuing the operation, you agree to comply with the rules of the company's policy and assume responsibility in case of non-compliance.<br/>
+        All the information you will be able to get is absolutely confidential.
+    </p>
+    <a asp-area="" asp-controller="Leads" asp-action="Contact">
+    <button type="button" class="btn btn-outline-primary btn-sm" id="continue">Continue</button>
+    </a>  
+</div>
+
+</div>
+
+<table>
+<tr><th>List Name</th><th style="text-align: center;">Edit List</th><th style="text-align: center;">Delete List</th><th style="text-align: center;">Last Сhanges</th></tr>
+    @foreach (var item in Model)
+    {
+        <tr id="Dashboard"><td class="view" id="@item.ListName">@item.ListName</td><td class="td" style="text-align: center;" id="@item.Id">&#9998;</td><td class="del" id="@item.ListName" style="text-align: center;">&#10008;</td><td style="text-align: center;">04.12.2022</td></tr>
+    }
+</table>
+<div id="result" style="display: none;"></div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.del').click(function() {
+            var ListName = $(this).attr('id');
+            $('#result').load('@Url.Action("DeleteList")', { 'choices[]': [ListName] });
+            alert("List " + ListName + " Was Deleted");
+            window.location.href = 'https://localhost:7081/List/Dashboard';
+            });
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('.view').click(function () {
+            var ListName = $(this).attr('id');
+            $('#result').load('@Url.Action("ViewList")', { 'choices[]': [ListName] });
+            var modal = document.getElementById("myModal");
+            // get <span>, becouse close modal window
+            var span = document.getElementsByClassName("close")[0];
+            modal.style.display = "block";
+            // click <span> (x), user to close modal window
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            });
+        });
+    </script>
+}
